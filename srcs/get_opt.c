@@ -6,18 +6,22 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/11 11:13:48 by tglaudel          #+#    #+#             */
-/*   Updated: 2016/06/01 14:05:51 by tglaudel         ###   ########.fr       */
+/*   Updated: 2016/06/01 16:25:22 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static int		add_opt(int pos, int opt)
+static int		add_opt(int pos, int opt, char c)
 {
 	int		tmp;
 
 	if (pos == -1)
-		ft_errors("ERROR : Illegal option.", 1, 0);
+	{
+		ft_printf("ft_ls: illegal option -- %c\nusage: ls [-%s] [file ...]\n",\
+		c, OPT_STRING);
+		exit(0);
+	}
 	tmp = 1;
 	tmp = tmp << pos;
 	opt = opt | tmp;
@@ -65,7 +69,7 @@ int				get_opt(char **av, int *offset)
 			break ;
 		if (av[i][0] == '-' && av[i][1] != '\0' && !ft_isdigit(av[i][1]))
 			while (av[i][++j])
-				opt = add_opt(position_in_opt(av[i][j]), opt);
+				opt = add_opt(position_in_opt(av[i][j]), opt, av[i][j]);
 	}
 	*offset = i;
 	return (opt);

@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/01 13:39:50 by tglaudel          #+#    #+#             */
-/*   Updated: 2016/06/02 14:56:16 by tglaudel         ###   ########.fr       */
+/*   Created: 2016/06/02 11:48:36 by tglaudel          #+#    #+#             */
+/*   Updated: 2016/06/02 17:23:18 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void init_env(t_env *e)
+void	print_elem(t_elem *elem, int opt)
 {
-	e->opt = 0;
-	e->elem_start = NULL;
+	(void)opt;
+	ft_printf("%s\n", elem->data->name);
 }
 
-int main(int ac, char **av)
+void	print_list_elem(t_elem *start, int opt)
 {
-	int		offset;
-	t_env	e;
+	t_elem *tmp;
 
-	init_env(&e);
-	e.opt = get_opt(av, &offset);
-	e.elem_start = get_args(&av[offset], ac - offset);
-	loop_elem(e.elem_start, e.opt);
-	return (0);
+	tmp = start;
+	if (start->data->path_parent)
+		ft_printf("%s:\n", start->data->path_parent);
+	while (tmp)
+	{
+		print_elem(tmp, opt);
+		tmp = tmp->next;
+	}
+	ft_putchar('\n');
 }

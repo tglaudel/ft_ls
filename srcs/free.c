@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/01 13:39:50 by tglaudel          #+#    #+#             */
-/*   Updated: 2016/06/02 14:56:16 by tglaudel         ###   ########.fr       */
+/*   Created: 2016/06/01 16:54:52 by tglaudel          #+#    #+#             */
+/*   Updated: 2016/06/02 14:26:55 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void init_env(t_env *e)
+void		free_list(t_elem *elem)
 {
-	e->opt = 0;
-	e->elem_start = NULL;
-}
+	t_elem *tmp;
 
-int main(int ac, char **av)
-{
-	int		offset;
-	t_env	e;
-
-	init_env(&e);
-	e.opt = get_opt(av, &offset);
-	e.elem_start = get_args(&av[offset], ac - offset);
-	loop_elem(e.elem_start, e.opt);
-	return (0);
+	while (elem)
+	{
+		tmp = elem->next;
+		if (elem->data->path)
+			ft_strdel(&elem->data->path);
+		if (elem->data->name)
+			ft_strdel(&elem->data->name);
+		if (elem->data->path_parent)
+			ft_strdel(&elem->data->path_parent);
+		free(elem);
+		elem = NULL;
+		elem = tmp;
+	}
 }
