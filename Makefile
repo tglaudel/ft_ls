@@ -28,7 +28,6 @@ SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 
 NAME = ft_ls
-
 CC = gcc
 LIBFT = libft/libft.a
 CFLAGS = -Werror -Wall -Wextra
@@ -36,22 +35,22 @@ CFLAGS = -Werror -Wall -Wextra
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(CFLAGS) $(LIBFT) $(SRC) -Iincludes -o $(NAME)
+	$(CC) $(CFLAGS) $(LIBFT) $(SRC) -Iincludes -o $(NAME) libft/libft.a
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
 	$(CC) $(CFLAGS) -c $< -Iincludes -o $@
 
 $(LIBFT):
-	make -C libft -j8
+	make -C libft
 
 clean:
-	rm -rf $(OBJ_PATH) -j8
-	make -C libft/ clean -j8
+	rm -rf $(OBJ_PATH)
+	make -C libft/ clean
 
 fclean: clean
-	rm -rf $(NAME) -j8
-	make -C libft/ fclean -j8
+	rm -rf $(NAME)
+	make -C libft/ fclean
 
 re: fclean all
 

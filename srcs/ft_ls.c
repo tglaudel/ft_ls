@@ -45,14 +45,14 @@ void	loop_dir(t_elem *elem, int opt)
 	while ((dir = readdir(elem->data->rep)) != NULL)
 	{
 		p = create_path(elem->data->path, dir->d_name);
-		if (stat(p, &st) == -1)
-			add_elem(&error, new_elem(st, dir->d_name, p, elem->data->path));
+		if (lstat(p, &st) == -1)
+			add_elem(&error, new_elem(st, dir->d_name, p, elem->data->path), opt);
 		else
-			add_elem(&list, new_elem(st, dir->d_name, p, elem->data->path));
+			add_elem(&list, new_elem(st, dir->d_name, p, elem->data->path), opt);
 	}
 	closedir(elem->data->rep);
 	print_error_lst(error);
-	print_list_elem(sort_function(list, opt), opt);
+	print_list_elem(list, opt);
 	if (have_opt('R', opt) && list != NULL)
 		recurse_loop(list, opt);
 	free_list(list);

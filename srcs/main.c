@@ -25,7 +25,7 @@ int main(int ac, char **av)
 
 	init_env(&e);
 	e.opt = get_opt(av, &offset);
-	e.elem_start = get_args(&av[offset], ac - offset);
+	e.elem_start = get_args(&av[offset], ac - offset, e.opt);
 	loop_elem(e.elem_start, e.opt);
 	return (0);
 }

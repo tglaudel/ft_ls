@@ -29,17 +29,23 @@
 # include <sys/stat.h>
 # include <sys/dir.h>
 
-# define OPT_STRING "Rrtalu"
+# define OPT_STRING "RrtalSsUc"
 
 typedef struct stat t_stat;
+typedef struct passwd t_psswd;
+typedef struct group t_group;
 
 typedef struct		s_data
 {
 	char			*name;
 	char			*path;
 	char			*path_parent;
+	char			*time;
+	char			*perm;
 	t_stat			stat;
 	DIR				*rep;
+	t_psswd			*pwuid;
+	t_group			*grgid;
 }					t_data;
 
 typedef struct		s_elem
@@ -68,14 +74,15 @@ int					get_opt(char **av, int *offset);
 t_elem				*sort_function(t_elem *start, int opt);
 t_elem				*sort_time(t_elem *start);
 t_elem				*sort_lexico(t_elem *start);
+int					sort_condition(t_elem *elem, t_elem *new, int opt);
 
 /*
 ** Elem & args:
 */
 
-void 				add_elem(t_elem **start, t_elem *new);
+void 				add_elem(t_elem **start, t_elem *new, int opt);
 void				loop_elem(t_elem *start, int opt);
-t_elem				*get_args(char **av, int ac);
+t_elem				*get_args(char **av, int ac, int opt);
 void				recurse_loop(t_elem *start, int opt);
 t_elem				*new_elem(t_stat stat, char *name, char *path, char *path_parent);
 

@@ -15,7 +15,13 @@
 void	print_elem(t_elem *elem, int opt)
 {
 	(void)opt;
-	ft_printf("%s\n", elem->data->name);
+	if (have_opt('l', opt))
+	{
+		ft_printf("%s %d %s ", elem->data->perm, elem->data->stat.st_nlink, elem->data->pwuid->pw_name);
+		ft_printf("%s %5d %s ", elem->data->grgid->gr_name, elem->data->stat.st_size, elem->data->time);
+	}
+	write(1, elem->data->name, ft_strlen(elem->data->name));
+	write(1, "\n", 1);
 }
 
 void	print_list_elem(t_elem *start, int opt)

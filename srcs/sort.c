@@ -47,3 +47,19 @@ t_elem			*sort_function(t_elem *start, int opt)
 	else
 		return (sort_lexico(start));
 }
+
+int				sort_condition(t_elem *elem, t_elem *new, int opt)
+{
+	if (have_opt('t', opt))
+	{
+		if (elem->data->stat.st_ctime == new->data->stat.st_ctime)
+			return (ft_strcmp(elem->data->name, new->data->name));
+		else if (elem->data->stat.st_ctime < new->data->stat.st_ctime)
+			return (1);
+		return (0);
+	}
+	else if (have_opt('f', opt))
+		return (1);
+	else
+		return (ft_strcmp(elem->data->name, new->data->name));
+}

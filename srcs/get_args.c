@@ -25,7 +25,7 @@ void print_error_lst(t_elem *error)
 	free_list(error);
 }
 
-t_elem		*get_args(char **av, int ac)
+t_elem		*get_args(char **av, int ac, int opt)
 {
 	int		i;
 	t_stat	st;
@@ -37,16 +37,16 @@ t_elem		*get_args(char **av, int ac)
 	i = -1;
 	while (av[++i])
 	{
-		if (stat(av[i], &st) == -1)
-			add_elem(&error, new_elem(st, av[i], av[i], NULL));
+		if (lstat(av[i], &st) == -1)
+			add_elem(&error, new_elem(st, av[i], av[i], NULL), opt);
 		else
-			add_elem(&list, new_elem(st, av[i], av[i], NULL));
+			add_elem(&list, new_elem(st, av[i], av[i], NULL), opt);
 	}
 	if (ac == 0)
 	{
-		if (stat(".", &st) == -1)
+		if (lstat(".", &st) == -1)
 			ft_errors("heuu.. comment dire", 1, 0);
-		add_elem(&list, new_elem(st, ".", ".", NULL));
+		add_elem(&list, new_elem(st, ".", ".", NULL), opt);
 	}
 	print_error_lst(sort_lexico(error));
 	return (list);
