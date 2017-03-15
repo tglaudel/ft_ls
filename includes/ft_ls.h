@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 13:36:51 by tglaudel          #+#    #+#             */
-/*   Updated: 2016/06/02 19:30:15 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/15 19:23:59 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,20 @@
 # include <sys/stat.h>
 # include <sys/dir.h>
 
-# define OPT_STRING "RrtalSsUc"
+# define OPT_STRING "RrtalSc"
+# define BUF_SIZE 2048
 
 typedef struct stat t_stat;
 typedef struct passwd t_psswd;
 typedef struct group t_group;
+
+typedef struct		s_max
+{
+	int				size;
+	int				pid;
+	int				gid;
+	int				link;
+}					t_max;
 
 typedef struct		s_data
 {
@@ -71,10 +80,8 @@ int					get_opt(char **av, int *offset);
 ** Sort :
 */
 
-t_elem				*sort_function(t_elem *start, int opt);
-t_elem				*sort_time(t_elem *start);
-t_elem				*sort_lexico(t_elem *start);
-int					sort_condition(t_elem *elem, t_elem *new, int opt);
+t_elem				*sort_all(t_elem *elem);
+int					sort_function(t_elem *e1, t_elem *e2, int opt);
 
 /*
 ** Elem & args:
@@ -84,15 +91,21 @@ void 				add_elem(t_elem **start, t_elem *new, int opt);
 void				loop_elem(t_elem *start, int opt);
 t_elem				*get_args(char **av, int ac, int opt);
 void				recurse_loop(t_elem *start, int opt);
-t_elem				*new_elem(t_stat stat, char *name, char *path, char *path_parent);
+t_elem				*new_elem(t_stat stat, char *name, char *path,
+					char *path_parent);
 
 /*
 ** Print:
 */
 
+int					biggest_elem_size(t_elem *start);
+int					biggest_elem_pid(t_elem *start);
+int					biggest_elem_gid(t_elem *start);
+int					biggest_elem_link(t_elem *start);
 void				print_error_lst(t_elem *error);
-void				print_elem(t_elem *elem, int opt);
+void				print_elem(t_elem *elem, t_max *max, int opt);
 void				print_list_elem(t_elem *start, int opt);
+void				push_in_buf(char *s, int force_print);
 
 /*
 ** free:

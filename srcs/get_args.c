@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 14:21:52 by tglaudel          #+#    #+#             */
-/*   Updated: 2016/06/02 16:17:56 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/15 16:16:39 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ t_elem		*get_args(char **av, int ac, int opt)
 			ft_errors("heuu.. comment dire", 1, 0);
 		add_elem(&list, new_elem(st, ".", ".", NULL), opt);
 	}
-	print_error_lst(sort_lexico(error));
+	print_error_lst(sort_all(error));
 	return (list);
 }

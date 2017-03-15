@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 13:39:50 by tglaudel          #+#    #+#             */
-/*   Updated: 2016/06/02 14:56:16 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/15 19:09:57 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int main(int ac, char **av)
 	e.opt = get_opt(av, &offset);
 	e.elem_start = get_args(&av[offset], ac - offset, e.opt);
 	loop_elem(e.elem_start, e.opt);
+	push_in_buf("", 1);
 	return (0);
 }

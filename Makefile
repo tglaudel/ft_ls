@@ -6,7 +6,7 @@
 #    By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/30 08:59:28 by tglaudel          #+#    #+#              #
-#    Updated: 2016/06/02 11:51:40 by tglaudel         ###   ########.fr        #
+#    Updated: 2017/03/15 18:40:52 by tglaudel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC_NAME = main.c \
 		   free.c \
 		   ft_ls.c \
 		   print.c \
+		   biggest.c \
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 

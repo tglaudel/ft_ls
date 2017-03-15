@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 14:30:57 by tglaudel          #+#    #+#             */
-/*   Updated: 2016/06/02 14:29:40 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/15 15:53:12 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void add_elem(t_elem **start, t_elem *new, int opt)
 {
 	t_elem *elem;
 
-	elem = *start;
-	if (*start == NULL || sort_condition(elem, new, opt) > 0)
+	if ((elem = *start) == NULL || sort_function(elem, new, opt) > 0)
 	{
 		*start = new;
 		new->next = elem;
@@ -57,7 +56,7 @@ void add_elem(t_elem **start, t_elem *new, int opt)
 				elem->next = new;
 				break ;
 			}
-			else if (sort_condition(elem->next, new, opt) > 0)
+			else if (sort_function(elem->next, new, opt) > 0)
 			{
 				new->next = elem->next;
 				elem->next = new;

@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 16:35:30 by tglaudel          #+#    #+#             */
-/*   Updated: 2016/06/02 19:32:16 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/15 19:24:06 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ char	*create_path(char *path, char *name)
 
 int		is_dot_directory(t_elem *elem)
 {
-	if (ft_strcmp(elem->data->name, ".") == 0 || ft_strcmp(elem->data->name, "..") == 0)
+	if (ft_strcmp(elem->data->name, ".") == 0
+		|| ft_strcmp(elem->data->name, "..") == 0)
 		return (1);
 	return (0);
 }
@@ -66,7 +67,11 @@ void recurse_loop(t_elem *start, int opt)
 	while (elem)
 	{
 		if (S_ISDIR(elem->data->stat.st_mode) && !is_dot_directory(elem))
-			loop_dir(elem, opt);
+		{
+			if ((have_opt('a', opt) && elem->data->name[0] == '.')
+				|| elem->data->name[0] != '.')
+				loop_dir(elem, opt);
+		}
 		elem = elem->next;
 	}
 }
@@ -74,6 +79,7 @@ void recurse_loop(t_elem *start, int opt)
 void	loop_elem(t_elem *start, int opt)
 {
 	t_elem	*elem;
+	t_max	max;
 
 	elem = start;
 	while (elem)
@@ -81,7 +87,13 @@ void	loop_elem(t_elem *start, int opt)
 		if (S_ISDIR(elem->data->stat.st_mode))
 			loop_dir(elem, opt);
 		else
-			print_elem(elem, opt);
+		{
+			max.size = biggest_elem_size(start);
+			max.pid = biggest_elem_pid(start);
+			max.gid = biggest_elem_gid(start);
+			max.link = biggest_elem_link(start);
+			print_elem(elem, &max, opt);
+		}
 		elem = elem->next;
 	}
 }

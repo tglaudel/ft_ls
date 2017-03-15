@@ -6,13 +6,48 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 15:01:16 by tglaudel          #+#    #+#             */
-/*   Updated: 2016/06/02 19:32:05 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/15 16:19:43 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-t_elem			*sort_lexico(t_elem *start)
+static int			sort_lexico(t_elem *e1, t_elem *e2, int opt)
+{
+	if (have_opt('r', opt))
+		return (ft_strcmp(e1->data->name, e2->data->name) < 0);
+	return (ft_strcmp(e1->data->name, e2->data->name) > 0);
+}
+
+static int			sort_time(t_elem *e1, t_elem *e2, int opt)
+{
+	if (e1->data->stat.st_ctime == e2->data->stat.st_ctime)
+		return (sort_lexico(e1, e2, opt));
+	if (have_opt('r', opt))
+		return (e1->data->stat.st_ctime > e2->data->stat.st_ctime);
+	return (e1->data->stat.st_ctime < e2->data->stat.st_ctime);
+}
+
+static int			sort_size(t_elem *e1, t_elem *e2, int opt)
+{
+	if (e1->data->stat.st_size == e2->data->stat.st_size)
+		return (sort_lexico(e1, e2, opt));
+	if (have_opt('r', opt))
+		return (e1->data->stat.st_size > e2->data->stat.st_size);
+	return (e1->data->stat.st_size < e2->data->stat.st_size);
+}
+
+int					sort_function(t_elem *e1, t_elem *e2, int opt)
+{
+	if (have_opt('t', opt))
+		return (sort_time(e1, e2, opt));
+	else if (have_opt('S', opt))
+		return (sort_size(e1, e2, opt));
+	else
+		return (sort_lexico(e1, e2, opt));
+}
+
+t_elem				*sort_all(t_elem *start)
 {
 	t_elem *elem;
 	t_data *data;
@@ -31,35 +66,4 @@ t_elem			*sort_lexico(t_elem *start)
 			elem = elem->next;
 	}
 	return (start);
-}
-
-t_elem			*sort_time(t_elem *start)
-{
-	return (start);
-}
-
-t_elem			*sort_function(t_elem *start, int opt)
-{
-	if (have_opt('u', opt))
-		return (start);
-	else if (have_opt('t', opt))
-		return (sort_time(start));
-	else
-		return (sort_lexico(start));
-}
-
-int				sort_condition(t_elem *elem, t_elem *new, int opt)
-{
-	if (have_opt('t', opt))
-	{
-		if (elem->data->stat.st_ctime == new->data->stat.st_ctime)
-			return (ft_strcmp(elem->data->name, new->data->name));
-		else if (elem->data->stat.st_ctime < new->data->stat.st_ctime)
-			return (1);
-		return (0);
-	}
-	else if (have_opt('f', opt))
-		return (1);
-	else
-		return (ft_strcmp(elem->data->name, new->data->name));
 }
