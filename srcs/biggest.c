@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 18:17:43 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/15 18:40:40 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/16 15:10:45 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int count_large(int n)
 	int len;
 
 	len = 0;
+	if (n == 0)
+		return (1);
 	while (n)
 	{
 		n = n / 10;
@@ -25,7 +27,7 @@ int count_large(int n)
 	return (len);
 }
 
-int		biggest_elem_size(t_elem *start)
+int		biggest_elem_size(t_elem *start, int opt)
 {
 	t_elem	*tmp;
 	int		n;
@@ -35,14 +37,15 @@ int		biggest_elem_size(t_elem *start)
 	tmp = start;
 	while (tmp)
 	{
-		if ((len = count_large(tmp->data->stat.st_size)) > n)
-			n = len;
+		if (have_opt('a', opt) || tmp->data->name[0] != '.')
+			if ((len = count_large(tmp->data->stat.st_size)) > n)
+				n = len;
 		tmp = tmp->next;
 	}
 	return (n);
 }
 
-int		biggest_elem_pid(t_elem *start)
+int		biggest_elem_pid(t_elem *start, int opt)
 {
 	t_elem	*tmp;
 	int		n;
@@ -52,14 +55,15 @@ int		biggest_elem_pid(t_elem *start)
 	tmp = start;
 	while (tmp)
 	{
-		if ((len = ft_strlen(tmp->data->pwuid->pw_name)) > n)
-			n = len;
+		if (have_opt('a', opt) || tmp->data->name[0] != '.')
+			if ((len = ft_strlen(tmp->data->pwuid->pw_name)) > n)
+				n = len;
 		tmp = tmp->next;
 	}
 	return (n);
 }
 
-int		biggest_elem_gid(t_elem *start)
+int		biggest_elem_gid(t_elem *start, int opt)
 {
 	t_elem	*tmp;
 	int		n;
@@ -69,14 +73,15 @@ int		biggest_elem_gid(t_elem *start)
 	tmp = start;
 	while (tmp)
 	{
-		if ((len = ft_strlen(tmp->data->grgid->gr_name)) > n)
-			n = len;
+		if (have_opt('a', opt) || tmp->data->name[0] != '.')
+			if ((len = ft_strlen(tmp->data->grgid->gr_name)) > n)
+				n = len;
 		tmp = tmp->next;
 	}
 	return (n);
 }
 
-int		biggest_elem_link(t_elem *start)
+int		biggest_elem_link(t_elem *start, int opt)
 {
 	t_elem	*tmp;
 	int		n;
@@ -86,9 +91,18 @@ int		biggest_elem_link(t_elem *start)
 	tmp = start;
 	while (tmp)
 	{
-		if ((len = count_large(tmp->data->stat.st_size)) > n)
-			n = len;
+		if (have_opt('a', opt) || tmp->data->name[0] != '.')
+			if ((len = count_large(tmp->data->stat.st_nlink)) > n)
+				n = len;
 		tmp = tmp->next;
 	}
 	return (n);
+}
+
+void initialize_max(t_max *max, t_elem *start, int opt)
+{
+	max->size = biggest_elem_size(start, opt);
+	max->pid = biggest_elem_pid(start, opt);
+	max->gid = biggest_elem_gid(start, opt);
+	max->link = biggest_elem_link(start, opt);
 }

@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 14:30:57 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/15 15:53:12 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/16 17:05:50 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	get_elem_information(t_elem *elem)
 	elem->data->perm = get_permission(elem->data->stat);
 }
 
-void add_elem(t_elem **start, t_elem *new, int opt)
+int add_elem(t_elem **start, t_elem *new, int opt)
 {
 	t_elem *elem;
 
@@ -64,6 +64,28 @@ void add_elem(t_elem **start, t_elem *new, int opt)
 			}
 			elem = elem->next;
 		}
+	return (new->data->stat.st_blocks);
+}
+
+void add_error(t_elem **start, t_elem *new)
+{
+	t_elem *elem;
+
+	if ((elem = *start) == NULL)
+	{
+		*start = new;
+		new->next = elem;
+	}
+	else
+		while (elem)
+		{
+			if (elem->next == NULL)
+			{
+				elem->next = new;
+				break ;
+			}
+			elem = elem->next;
+		}
 }
 
 t_elem		*new_elem(t_stat stat, char *name, char *path, char *path_parent)
@@ -76,7 +98,7 @@ t_elem		*new_elem(t_stat stat, char *name, char *path, char *path_parent)
 		ft_errors("ERROR : Malloc new_elem failed", 1, 0);
 	new->data->name = ft_strdup(name);
 	if (path)
-		new->data->path = ft_strdup(path);
+		new->data->path = path;
 	else
 		new->data->path = NULL;
 	if (path_parent)

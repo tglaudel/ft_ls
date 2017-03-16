@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 13:36:51 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/15 19:23:59 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/16 16:14:05 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include <sys/dir.h>
 
 # define OPT_STRING "RrtalSc"
-# define BUF_SIZE 2048
+# define BUF_SIZE 100000
 
 typedef struct stat t_stat;
 typedef struct passwd t_psswd;
@@ -87,7 +87,9 @@ int					sort_function(t_elem *e1, t_elem *e2, int opt);
 ** Elem & args:
 */
 
-void 				add_elem(t_elem **start, t_elem *new, int opt);
+
+int 				add_elem(t_elem **start, t_elem *new, int opt);
+void				add_error(t_elem **start, t_elem *new);
 void				loop_elem(t_elem *start, int opt);
 t_elem				*get_args(char **av, int ac, int opt);
 void				recurse_loop(t_elem *start, int opt);
@@ -98,13 +100,15 @@ t_elem				*new_elem(t_stat stat, char *name, char *path,
 ** Print:
 */
 
-int					biggest_elem_size(t_elem *start);
-int					biggest_elem_pid(t_elem *start);
-int					biggest_elem_gid(t_elem *start);
-int					biggest_elem_link(t_elem *start);
+int					count_large(int n);
+void				initialize_max(t_max *max, t_elem *start, int opt);
+int					biggest_elem_size(t_elem *start, int opt);
+int					biggest_elem_pid(t_elem *start, int opt);
+int					biggest_elem_gid(t_elem *start, int opt);
+int					biggest_elem_link(t_elem *start, int opt);
 void				print_error_lst(t_elem *error);
 void				print_elem(t_elem *elem, t_max *max, int opt);
-void				print_list_elem(t_elem *start, int opt);
+void				print_list_elem(t_elem *start, int opt, int total);
 void				push_in_buf(char *s, int force_print);
 
 /*
