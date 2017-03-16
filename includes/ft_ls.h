@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 13:36:51 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/16 16:14:05 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/16 18:48:00 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <sys/stat.h>
 # include <sys/dir.h>
 
-# define OPT_STRING "RrtalSc"
+# define OPT_STRING "RrtalS"
 # define BUF_SIZE 100000
 
 typedef struct stat t_stat;
@@ -101,6 +101,7 @@ t_elem				*new_elem(t_stat stat, char *name, char *path,
 */
 
 int					count_large(int n);
+void				print_error(char *s);
 void				initialize_max(t_max *max, t_elem *start, int opt);
 int					biggest_elem_size(t_elem *start, int opt);
 int					biggest_elem_pid(t_elem *start, int opt);

@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 16:35:30 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/16 17:37:50 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/16 18:32:08 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	loop_dir(t_elem *elem, int opt, int total)
 	list = NULL;
 	error = NULL;
 	if ((elem->data->rep = opendir(elem->data->path)) == NULL)
-		add_error(&error, elem);
+		print_error(elem->data->path);
 	while (elem->data->rep != NULL && (dir = readdir(elem->data->rep)) != NULL)
 		{
 			p = create_path(elem->data->path, dir->d_name);

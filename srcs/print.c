@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/02 11:48:36 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/16 17:19:56 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/16 19:28:05 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	print_opt_l(t_elem *elem, t_max *max, int opt)
 	push_in_buf(" ", 0);
 	puts_larg(0, elem->data->pwuid->pw_name, max->pid);
 	push_in_buf(elem->data->pwuid->pw_name, 0);
-	push_in_buf(" ", 0);
+	push_in_buf("  ", 0);
 	puts_larg(0, elem->data->grgid->gr_name, max->gid);
 	push_in_buf(elem->data->grgid->gr_name, 0);
 	push_in_buf("  ", 0);
@@ -78,9 +78,19 @@ void	print_opt_l(t_elem *elem, t_max *max, int opt)
 
 void	print_elem(t_elem *elem, t_max *max, int opt)
 {
+	char	*link;
+
 	if (have_opt('l', opt))
 		print_opt_l(elem, max, opt);
 	push_in_buf(elem->data->name, 0);
+	if (have_opt('l', opt) && S_ISLNK(elem->data->stat.st_mode))
+	{
+		link = ft_strnew(255);
+		readlink(elem->data->path, link, 255);
+		push_in_buf(" -> ", 0);
+		push_in_buf(link, 0);
+		ft_strdel(&link);
+	}
 	push_in_buf("\n", 0);
 }
 

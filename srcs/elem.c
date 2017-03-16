@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 14:30:57 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/16 17:05:50 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/16 19:32:52 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ void add_error(t_elem **start, t_elem *new)
 
 t_elem		*new_elem(t_stat stat, char *name, char *path, char *path_parent)
 {
-	t_elem *new;
+	t_elem	*new;
+	char	link[]
 
 	if ((new = (t_elem*)malloc(sizeof(t_elem))) == NULL)
 		ft_errors("ERROR : Malloc new_elem failed.", 1, 0);
@@ -106,7 +107,7 @@ t_elem		*new_elem(t_stat stat, char *name, char *path, char *path_parent)
 	else
 		new->data->path_parent = NULL;
 	new->data->stat = stat;
-	get_elem_information(new);
+	path == NULL ? 0 : get_elem_information(new);
 	new->next = NULL;
 	return(new);
 }

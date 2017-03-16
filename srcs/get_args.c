@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 14:21:52 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/16 16:47:52 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/16 18:46:05 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,20 @@ void print_error_lst(t_elem *error)
 	elem = error;
 	while (elem)
 	{
-		if (elem->data->rep == NULL)
-		{
-			push_in_buf(elem->data->path, 0);
-			push_in_buf(":\nft_ls: ", 0);
-			push_in_buf(elem->data->path, 0);
-			push_in_buf(": Permission denied\n", 0);
-		}
-		else
-		{
-			push_in_buf("ft_ls: ", 0);
-			push_in_buf(elem->data->name, 0);
-			push_in_buf(": No such file or directory\n", 0);
-		}
+		push_in_buf("ft_ls: ", 0);
+		push_in_buf(elem->data->name, 0);
+		push_in_buf(": No such file or directory\n", 0);
 		elem = elem->next;
 	}
+}
+
+void print_error(char *s)
+{
+	push_in_buf("\n", 0);
+	push_in_buf(s, 0);
+	push_in_buf(":\nft_ls: ", 0);
+	push_in_buf(s, 0);
+	push_in_buf(": Permission denied\n", 0);
 }
 
 t_elem		*get_args(char **av, int ac, int opt)

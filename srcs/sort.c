@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 15:01:16 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/16 12:51:16 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/16 18:40:32 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ static int			sort_size(t_elem *e1, t_elem *e2, int opt)
 
 int					sort_function(t_elem *e1, t_elem *e2, int opt)
 {
-	if (have_opt('u', opt))
-		return (0);
 	if (have_opt('t', opt))
 		return (sort_time(e1, e2, opt));
 	else if (have_opt('S', opt))
