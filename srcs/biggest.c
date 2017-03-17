@@ -6,13 +6,13 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/15 18:17:43 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/16 15:10:45 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/17 15:07:17 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-int count_large(int n)
+int		count_large(int n)
 {
 	int len;
 
@@ -97,12 +97,4 @@ int		biggest_elem_link(t_elem *start, int opt)
 		tmp = tmp->next;
 	}
 	return (n);
-}
-
-void initialize_max(t_max *max, t_elem *start, int opt)
-{
-	max->size = biggest_elem_size(start, opt);
-	max->pid = biggest_elem_pid(start, opt);
-	max->gid = biggest_elem_gid(start, opt);
-	max->link = biggest_elem_link(start, opt);
 }

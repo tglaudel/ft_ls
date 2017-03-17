@@ -6,13 +6,13 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 14:21:52 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/16 18:46:05 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/17 15:13:55 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void print_error_lst(t_elem *error)
+void	print_error_lst(t_elem *error)
 {
 	t_elem *elem;
 
@@ -26,7 +26,7 @@ void print_error_lst(t_elem *error)
 	}
 }
 
-void print_error(char *s)
+void	print_error(char *s)
 {
 	push_in_buf("\n", 0);
 	push_in_buf(s, 0);
@@ -35,7 +35,7 @@ void print_error(char *s)
 	push_in_buf(": Permission denied\n", 0);
 }
 
-t_elem		*get_args(char **av, int ac, int opt)
+t_elem	*get_args(char **av, int ac, int opt)
 {
 	int		i;
 	t_stat	st;

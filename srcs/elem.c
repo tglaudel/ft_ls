@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 14:30:57 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/16 19:32:52 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/17 15:15:51 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,13 @@ static char	*get_permission(t_stat stat)
 	char	*perm;
 
 	perm = ft_strnew(10);
-	perm[0] = stat.st_mode & S_IFDIR ? 'd' : '-';
-	perm[0] = S_ISLNK(stat.st_mode) ? 'l' : perm[0];
+	perm[0] = '-';
+	perm[0] = (S_ISDIR(stat.st_mode)) ? 'd' : perm[0];
+	perm[0] = (S_ISFIFO(stat.st_mode)) ? 'p' : perm[0];
+	perm[0] = (S_ISCHR(stat.st_mode)) ? 'c' : perm[0];
+	perm[0] = (S_ISBLK(stat.st_mode)) ? 'b' : perm[0];
+	perm[0] = (S_ISSOCK(stat.st_mode)) ? 's' : perm[0];
+	perm[0] = (S_ISLNK(stat.st_mode)) ? 'l' : perm[0];
 	perm[1] = stat.st_mode & S_IRUSR ? 'r' : '-';
 	perm[2] = stat.st_mode & S_IWUSR ? 'w' : '-';
 	perm[3] = stat.st_mode & S_IXUSR ? 'x' : '-';
@@ -39,7 +44,7 @@ static void	get_elem_information(t_elem *elem)
 	elem->data->perm = get_permission(elem->data->stat);
 }
 
-int add_elem(t_elem **start, t_elem *new, int opt)
+int			add_elem(t_elem **start, t_elem *new, int opt)
 {
 	t_elem *elem;
 
@@ -67,7 +72,7 @@ int add_elem(t_elem **start, t_elem *new, int opt)
 	return (new->data->stat.st_blocks);
 }
 
-void add_error(t_elem **start, t_elem *new)
+void		add_error(t_elem **start, t_elem *new)
 {
 	t_elem *elem;
 
@@ -91,7 +96,6 @@ void add_error(t_elem **start, t_elem *new)
 t_elem		*new_elem(t_stat stat, char *name, char *path, char *path_parent)
 {
 	t_elem	*new;
-	char	link[]
 
 	if ((new = (t_elem*)malloc(sizeof(t_elem))) == NULL)
 		ft_errors("ERROR : Malloc new_elem failed.", 1, 0);
@@ -109,5 +113,5 @@ t_elem		*new_elem(t_stat stat, char *name, char *path, char *path_parent)
 	new->data->stat = stat;
 	path == NULL ? 0 : get_elem_information(new);
 	new->next = NULL;
-	return(new);
+	return (new);
 }

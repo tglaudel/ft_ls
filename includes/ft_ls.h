@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 13:36:51 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/16 18:48:00 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/17 15:20:13 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@
 # define OPT_STRING "RrtalS"
 # define BUF_SIZE 100000
 
-typedef struct stat t_stat;
-typedef struct passwd t_psswd;
-typedef struct group t_group;
+# define MAJOR(x)((int32_t)(((u_int32_t)(x) >> 24) & 0xff))
+# define MINOR(x)((int32_t)((x) & 0xffffff))
+
+typedef struct stat		t_stat;
+typedef struct passwd	t_psswd;
+typedef struct group	t_group;
 
 typedef struct		s_max
 {
@@ -87,8 +90,7 @@ int					sort_function(t_elem *e1, t_elem *e2, int opt);
 ** Elem & args:
 */
 
-
-int 				add_elem(t_elem **start, t_elem *new, int opt);
+int					add_elem(t_elem **start, t_elem *new, int opt);
 void				add_error(t_elem **start, t_elem *new);
 void				loop_elem(t_elem *start, int opt);
 t_elem				*get_args(char **av, int ac, int opt);
@@ -102,6 +104,7 @@ t_elem				*new_elem(t_stat stat, char *name, char *path,
 
 int					count_large(int n);
 void				print_error(char *s);
+void				print_opt_l(t_elem *elem, t_max *max);
 void				initialize_max(t_max *max, t_elem *start, int opt);
 int					biggest_elem_size(t_elem *start, int opt);
 int					biggest_elem_pid(t_elem *start, int opt);
