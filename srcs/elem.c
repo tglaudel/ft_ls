@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/01 14:30:57 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/17 15:15:51 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/17 15:36:34 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			add_elem(t_elem **start, t_elem *new, int opt)
 			}
 			elem = elem->next;
 		}
-	return (new->data->stat.st_blocks);
+	return (new->data->perm[0] == 'l' ? 0 : new->data->stat.st_blocks);
 }
 
 void		add_error(t_elem **start, t_elem *new)

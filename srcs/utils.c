@@ -6,7 +6,7 @@
 /*   By: tglaudel <tglaudel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/17 15:18:39 by tglaudel          #+#    #+#             */
-/*   Updated: 2017/03/17 15:24:30 by tglaudel         ###   ########.fr       */
+/*   Updated: 2017/03/17 16:10:03 by tglaudel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ static void	print_size(t_elem *elem, t_max *max)
 static void	print_time(t_elem *elem)
 {
 	char	**tmp;
+	char	*tmp2;
 	int		n;
 
 	n = -1;
 	tmp = NULL;
+	tmp2 = NULL;
 	push_in_buf(" ", 0);
 	if ((time(NULL) - (elem->data->stat.st_mtime)) > 15548400 \
 		|| (elem->data->stat.st_mtime) > (time(NULL)))
@@ -59,15 +61,14 @@ static void	print_time(t_elem *elem)
 		push_in_buf("  ", 0);
 		push_in_buf(tmp[2], 0);
 		push_in_buf("  ", 0);
-		push_in_buf(ft_strtrim(tmp[4]), 0);
+		push_in_buf((tmp2 = ft_strtrim(tmp[4])), 0);
+		ft_strdel(&tmp2);
 		while (tmp[++n] != NULL)
 			ft_strdel(&tmp[n]);
 		free(tmp);
 	}
 	else
-	{
 		push_in_buf(elem->data->time, 0);
-	}
 	push_in_buf(" ", 0);
 }
 
